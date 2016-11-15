@@ -145,4 +145,3 @@ function draw()
     chart.draw(view, chartOptions);
   }
 }
-

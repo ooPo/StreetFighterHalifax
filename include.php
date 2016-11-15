@@ -119,7 +119,8 @@ function GetRanks ( $season = "", $event = "" )
 
   foreach ( GetRows ( $season, $event ) as $row )
   {
-    extract ( $row );
+    $winner = $row[ "winner" ];
+    $loser  = $row[ "loser"  ];
 
     $ranks[ $winner ][ "wins" ] += 1;
 
@@ -131,8 +132,8 @@ function GetRanks ( $season = "", $event = "" )
     $ranks[ $winner ][ "percentage" ] = ( $ranks[ $winner ][ "wins" ] / $ranks[ $winner ][ "total" ] ) * 100;
     $ranks[ $loser  ][ "percentage" ] = ( $ranks[ $loser  ][ "wins" ] / $ranks[ $loser  ][ "total" ] ) * 100;
 
-    $ranks[ $winner ][ "eloChange" ] += $eloChange;
-    $ranks[ $loser  ][ "eloChange" ] -= $eloChange;
+    $ranks[ $winner ][ "eloChange" ] += $row[ "eloChange" ];
+    $ranks[ $loser  ][ "eloChange" ] -= $row[ "eloChange" ];
 
     if ( $season != "" )
     {
@@ -141,8 +142,8 @@ function GetRanks ( $season = "", $event = "" )
     }
     else if ( $event != "" )
     {
-      $ranks[ $winner ][ "elo" ] = $winnerElo + $ranks[ $winner ][ "eloChange" ];
-      $ranks[ $loser  ][ "elo" ] = $loserElo  + $ranks[ $loser  ][ "eloChange" ];
+      $ranks[ $winner ][ "elo" ] = $row [ "winnerElo" ] + $ranks[ $winner ][ "eloChange" ];
+      $ranks[ $loser  ][ "elo" ] = $row [ "loserElo"  ] + $ranks[ $loser  ][ "eloChange" ];
     }
   }
 
