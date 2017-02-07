@@ -21,6 +21,11 @@ my $csvFile = "matches.csv";
 
 my $eloDefault = 1200;
 
+my %eloOverride =
+(
+#  'SFV: Season 2' => { 'OneEyedJack' => 1600 }
+);
+
 my %seasons =
 (
   'SF4: Season 1' => [ "2014-01-20", "2014-01-27", "2014-02-03", "2014-02-10", "2014-02-24", "2014-03-10", "2014-03-17", "2014-04-14", "2014-05-05", "2014-05-12", "2014-05-19", "2014-05-26" ],
@@ -104,8 +109,8 @@ else
               if ( $loser  ~~ $aliases{$alias} ) { $loser  = $alias };
             }
 
-            if ( ! exists $eloPrevious{$winner} ) { $eloPrevious{$winner} = $eloDefault; }
-            if ( ! exists $eloPrevious{$loser}  ) { $eloPrevious{$loser}  = $eloDefault; }
+            if ( ! exists $eloPrevious{$winner} ) { $eloPrevious{$winner} = exists $eloOverride{$season}{$winner} ? $eloOverride{$season}{$winner} : $eloDefault; }
+            if ( ! exists $eloPrevious{$loser}  ) { $eloPrevious{$loser}  = exists $eloOverride{$season}{$loser}  ? $eloOverride{$season}{$loser}  : $eloDefault; }
 
             if ( ! exists $eloCurrent{$loser}  ) { $eloCurrent{$loser}  = $eloPrevious{$loser};  }
             if ( ! exists $eloCurrent{$winner} ) { $eloCurrent{$winner} = $eloPrevious{$winner}; }
