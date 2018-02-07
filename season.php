@@ -11,7 +11,7 @@
   </head>
   <body>
     <h1><a href='index.php'>Street Fighter Halifax</a></h1>
-    <h2>Monday Night Ranking Battles<br>Season Rankings | <?= $season ?></h2>
+    <h2>Tuesday Night Ranking Battles<br>Season Rankings | <?= $season ?></h2>
     <h3>Rankings<br>(with <?= $matchesPlayed ?> or more matches played)</h3>
     <div class='rankings'><div id='rankingsTable'></div></div>
     <h3>ELO Points</h3>

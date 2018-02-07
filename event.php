@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1><a href='index.php'>Street Fighter Halifax</a></h1>
-    <h2>Monday Night Ranking Battles<br>Event Rankings | <?= $season . " " . $event ?></h2>
+    <h2>Tuesday Night Ranking Battles<br>Event Rankings | <?= $season . " | " . $event ?></h2>
     <h3>Rankings</h3>
     <div class='rankings'><div id='rankingsTable'></div></div>
     <h3>ELO Change</h3>
