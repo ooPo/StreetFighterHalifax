@@ -16,33 +16,36 @@ $argument = $arguments[ 0 ];
 ## Configuration
 ##
 
-$matchesFile = "data/matches.csv";
+$matchesFiles = array ( "data/saltshaker.csv", "data/challonge.csv" );
 
 ##
 ## CSV Functions
 ##
 
-function GetCSV ( $filename )
+function GetCSV ( $matchesFiles )
 {
   $csvRows = array ( );
 
-  if ( $file = fopen ( $filename, "r" ) )
+  foreach ( $matchesFiles as $filename )
   {
-    while ( ! feof ( $file ) )
+    if ( $file = fopen ( $filename, "r" ) )
     {
-      if ( $values = fgetcsv ( $file ) )
+      while ( ! feof ( $file ) )
       {
-        array_push ( $csvRows, array_combine ( array ( "season", "event", "winner", "winnerElo", "loser", "loserElo", "eloChange" ), $values ) );
+        if ( $values = fgetcsv ( $file ) )
+        {
+          array_push ( $csvRows, array_combine ( array ( "season", "event", "winner", "winnerElo", "loser", "loserElo", "eloChange" ), $values ) );
+        }
       }
-    }
 
-   fclose ( $file );
+     fclose ( $file );
+    }
   }
 
   return $csvRows;
 }
 
-$csvRows = GetCSV ( $matchesFile );
+$csvRows = GetCSV ( $matchesFiles );
 
 ##
 ## Row Functions

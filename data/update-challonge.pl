@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 ##
-## update.pl
+## update-challonge.pl
 ## by Naomi Peori (naomi@peori.ca)
+## by Elias Reid ()
 ##
 
 use strict;
@@ -17,7 +18,7 @@ use Chess::Elo qw(:all);
 ## Configuration
 ##
 
-my $csvFile = "matches.csv";
+my $csvFile = "challonge.csv";
 
 my $eloDefault = 1200;
 
@@ -28,16 +29,7 @@ my %eloOverride =
 
 my %seasons =
 (
-  'SF4 | Season 1'    => [ "2014-01-20", "2014-01-27", "2014-02-03", "2014-02-10", "2014-02-24", "2014-03-10", "2014-03-17", "2014-04-14", "2014-05-05", "2014-05-12", "2014-05-19", "2014-05-26" ],
-  'SF4 | Season 2'    => [ "2014-06-23", "2014-07-08", "2014-07-14", "2014-07-28", "2014-08-04", "2014-08-11", "2014-08-18", "2014-08-25", "2014-09-15", "2014-09-22", "2014-09-29", "2014-10-06" ],
-  'SF4 | Season 3'    => [ "2014-10-27", "2014-11-03", "2014-11-17", "2014-11-24", "2015-01-12", "2015-01-19", "2015-01-26", "2015-02-23", "2015-03-09", "2015-03-23", "2015-03-30", "2015-04-13" ],
-  'SF4 | Season 4'    => [ "2015-04-27", "2015-05-04", "2015-05-11", "2015-05-18", "2015-05-25", "2015-06-08", "2015-06-15", "2015-07-13", "2015-07-20", "2015-07-27", "2015-08-03", "2015-08-10" ],
-  'SF4 | Season 5'    => [ "2015-08-24", "2015-08-31", "2015-09-14", "2015-09-28", "2015-10-05", "2015-10-19", "2015-11-09", "2015-11-16", "2016-01-11", "2016-01-18", "2016-02-01" ],
-  'SFV | Season 1'    => [ "2016-04-18", "2016-05-02", "2016-05-16", "2016-05-23", "2016-05-30", "2016-06-06", "2016-06-27", "2016-07-11", "2016-07-25", "2016-08-08", "2016-08-15", "2016-08-22" ],
-  'SFV | Season 2'    => [ "2016-10-03", "2016-10-17", "2016-10-24", "2016-11-07", "2016-11-14", "2016-11-21", "2016-11-28", "2017-01-23", "2017-02-06", "2017-02-27", "2017-03-06", "2017-03-13" ],
-  'SFV | Season 3'    => [ "2017-06-05", "2017-07-24", "2017-08-07" ],
-  'SFV | Season 4'    => [ "2017-10-02", "2017-10-10", "2017-10-17", "2017-10-24", "2017-11-14", "2017-11-28" ],
-  'SFV:AE | Season 1' => [ "2018-02-06", "2018-02-13", "2018-02-20", "2018-03-06" ],
+  'Tekken 7: Season 1' => [ "2018-08-28" ],
 );
 
 my %aliases =
@@ -99,12 +91,23 @@ else
 
         my $jsonData = decode_json ( $fileData );
 
-        foreach my $match ( @{$jsonData->{matches}} )
+        # JSON from challonge stores player IDs (generated per event I'm guessing),
+        # rather than player names so, need to create a hash to map IDs to names
+
+        my %IDtoName = ();
+
+        foreach my $player ( @{$jsonData->{tournament}{participants}} )
         {
-          if ( $match->{winner}{gamertag} )
+          $IDtoName{$player->{participant}{id}} = $player->{participant}{name};
+        }
+
+        foreach my $match ( @{$jsonData->{tournament}{matches}} )
+        {
+          if ( $match->{match}{winner_id} )
           {
-            my $winner = $match->{winner}{gamertag};
-            my $loser  = $winner eq $match->{player2}{gamertag} ? $match->{player1}{gamertag} : $match->{player2}{gamertag};
+
+            my $winner = $IDtoName{$match->{match}{winner_id}};
+            my $loser  = $IDtoName{$match->{match}{loser_id}};
 
             foreach my $alias ( keys %aliases )
             {
