@@ -4,14 +4,14 @@
 <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/TR/html4/strict.dtd'>
 <html>
   <head>
-    <title>Street Fighter Halifax | <?= $season ?></title>
+    <title><?= $title ?> | <?= $season ?></title>
     <link type='text/css' rel='stylesheet' href='style.css'>
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script type='text/javascript'><?php require ( 'include.js.php' ); ?>  </script>
   </head>
   <body>
-    <h1><a href='index.php'>Street Fighter Halifax</a></h1>
-    <h2>Tuesday Night Ranking Battles<br>Season Rankings | <?= $season ?></h2>
+    <h1><a href='index.php'><?= $title ?></a></h1>
+    <h2><?= $subtitle ?><br>Season Rankings | <?= $season ?></h2>
     <h3>Rankings<br>(with <?= $matchesPlayed ?> or more matches played)</h3>
     <div class='rankings'><div id='rankingsTable'></div></div>
     <h3>ELO Points</h3>

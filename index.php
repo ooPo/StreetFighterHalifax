@@ -4,11 +4,11 @@
 <html>
   <head>
     <link type='text/css' rel='stylesheet' href='style.css'>
-    <title>Ranking Data</title>
+    <title><?= $title ?> | Rankings</title>
   </head>
   <body>
-    <h1>Street Fighter Halifax</h1>
-    <h2>Tuesday Night Ranking Battles<br>Hosted by <a href='http://www.twitch.tv/lastgs'>The Last Game Store</a></h2>
+    <h1><?= $title ?></h1>
+    <h2><?= $subtitle ?><br><?= $sponsor ?></h2>
 <?php $seasons = GetUniqueValues ( "season" ); rsort ( $seasons ); ?>
 <?php foreach ( $seasons as $season ) { ?>
     <h3><?= $season ?></h3>

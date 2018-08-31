@@ -5,6 +5,10 @@
 ## by Naomi Peori (naomi@peori.ca)
 ##
 
+$title    = "Street Fighter Halifax";
+$subtitle = "Tuesday Night Ranking Battles";
+$sponsor  = "Hosted by <a href='http://www.twitch.tv/lastgs'>The Last Game Store</a>";
+
 $arguments = explode ( "&", urldecode ( $_SERVER['QUERY_STRING'] ) );
 $argument = $arguments[ 0 ];
 
